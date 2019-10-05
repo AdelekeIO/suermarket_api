@@ -105,7 +105,7 @@ router.put("/:id", auth, (req, res) => {
   role.toLowerCase();
   console.log(role);
 
-  if (role !== "supervisor" || role !== "employee" || role !== "client")
+  if (role !== "supervisor" && role !== "employee" && role !== "client")
     return res.status(400).json({
       msg: "Role must be one of 'Supervisor' , 'Employee', or 'Client'"
     });
