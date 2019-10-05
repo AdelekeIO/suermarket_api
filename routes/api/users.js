@@ -24,7 +24,13 @@ router.post("/", (req, res) => {
     // Check for existing user
     User.findOne({ email }).then(user => {
       if (user) return res.status(400).json({ msg: "User already exists" });
+      role.toLowerCase();
+      console.log(role);
 
+      if (role !== "supervisor" || role !== "employee" || role !== "client")
+        return res.status(400).json({
+          msg: "Role must be one of 'Supervisor' , 'Employee', or 'Client'"
+        });
       const newUser = new User({
         name,
         email,
@@ -88,6 +94,14 @@ router.put("/:id", auth, (req, res) => {
   if (!name || !email || !password || !role) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
+
+  role.toLowerCase();
+  console.log(role);
+
+  if (role !== "supervisor" || role !== "employee" || role !== "client")
+    return res.status(400).json({
+      msg: "Role must be one of 'Supervisor' , 'Employee', or 'Client'"
+    });
   console.log(updateUser);
 
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
