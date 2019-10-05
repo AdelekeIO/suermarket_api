@@ -24,13 +24,20 @@ router.post("/", (req, res) => {
     // Check for existing user
     User.findOne({ email }).then(user => {
       if (user) return res.status(400).json({ msg: "User already exists" });
-      role.toLowerCase();
-      console.log(role);
+      // role.toLowerCase();
+      // console.log(role);
 
-      if (role !== "supervisor" || role !== "employee" || role !== "client")
+      if (
+        role.toLowerCase() != "supervisor" &&
+        role.toLowerCase() != "employee" &&
+        role.toLowerCase() != "client"
+      ) {
+        console.log(">>" + role);
+
         return res.status(400).json({
           msg: "Role must be one of 'Supervisor' , 'Employee', or 'Client'"
         });
+      }
       const newUser = new User({
         name,
         email,
