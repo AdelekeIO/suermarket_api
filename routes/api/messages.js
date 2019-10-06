@@ -42,7 +42,7 @@ router.get("/recieved/:id", auth, (req, res) => {
       .sort({ date: -1 })
       .then(messages =>
         res.status(200).json({
-          msg: "All supervisors.",
+          msg: "All Recieved Messages.",
           data: { messages, total: messages.length }
         })
       );
@@ -62,7 +62,7 @@ router.get("/sent/:id", auth, (req, res) => {
         .sort({ date: -1 })
         .then(messages =>
           res.status(200).json({
-            msg: "All supervisors.",
+            msg: "All Sent Messages.",
             data: { messages, total: messages.length }
           })
         );
