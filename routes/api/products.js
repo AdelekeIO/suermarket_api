@@ -69,13 +69,13 @@ router.post("/", auth, (req, res) => {
 // @desc    Edit A Product
 // @access  Private
 router.put("/:id", auth, (req, res) => {
-  const { desctiption, title } = req.body;
+  const { description, title, inStore } = req.body;
   // console.log(req.body);
 
   const updateProduct = {
     categoryID: req.body.categoryID,
     title: req.body.title,
-    desctiption: req.body.desctiption,
+    description: req.body.description,
     inStore: req.body.inStore,
     item_left: req.body.item_left,
     expiry_date: req.body.expiry_date,
@@ -83,15 +83,15 @@ router.put("/:id", auth, (req, res) => {
   };
 
   // Simple validation
-  if (!desctiption || !title) {
+  if (!description || !title || !inStore) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
-  //   console.log(updateCategory);
+  console.log(req.params.id);
 
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     // Update By ID
-    User.findByIdAndUpdate(
-      req.params.id,
+    Product.findByIdAndUpdate(
+      JSON.stringify(req.params.id),
       { $set: updateProduct },
       { new: true }
     )
@@ -107,6 +107,9 @@ router.put("/:id", auth, (req, res) => {
       })
       .catch(err => {
         console.log(err);
+        res
+          .status(404)
+          .json({ success: "false", msg: "Cannot read property 'id' of null" });
       });
   } else {
     res.status(404).json({ success: "false", msg: "provide correct ID" });
