@@ -91,18 +91,14 @@ router.put("/:id", auth, (req, res) => {
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     // Update By ID
     Product.findByIdAndUpdate(
-      JSON.stringify(req.params.id),
+      req.params.id,
       { $set: updateProduct },
       { new: true }
     )
       .then(product => {
         res.json({
           msg: "Updated Successfully",
-          product: {
-            id: product.id,
-            title: product.title,
-            desctiption: product.desctiption
-          }
+          product: product
         });
       })
       .catch(err => {
