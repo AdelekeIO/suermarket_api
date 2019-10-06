@@ -57,7 +57,7 @@ router.put("/:id", auth, (req, res) => {
 
   if (mongoose.Types.ObjectId.isValid(req.params.id)) {
     // Update By ID
-    User.findByIdAndUpdate(
+    ProductCategory.findByIdAndUpdate(
       req.params.id,
       { $set: updateCategory },
       { new: true }
